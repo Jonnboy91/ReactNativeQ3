@@ -4,7 +4,11 @@ import {Text, View, Image, TouchableOpacity, StyleSheet} from 'react-native';
 
 const ListItem = (props) => {
     return (
-        <TouchableOpacity style={styles.MainBox}>
+        <TouchableOpacity style={styles.MainBox} onPress={
+            () => {
+                props.navigation.navigate('Single', {otherParam: props.singleMedia});
+            }
+        }>
             <View style={styles.imagebox}>
                 <Image
                     style={styles.image}
@@ -44,6 +48,7 @@ const styles = StyleSheet.create({
 
 ListItem.propTypes = {
     singleMedia: PropTypes.object,
+    navigation: PropTypes.object,
 };
 
 export default ListItem;
