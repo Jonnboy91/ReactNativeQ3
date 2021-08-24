@@ -5,7 +5,6 @@ const uploadUrl = "http://media.mw.metropolia.fi/wbma/uploads/"
 
 const Single = (file) => {
     const otherParam = file.route.params.otherParam;
-    console.log("here",otherParam.thumbnails);
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.imagebox}>
