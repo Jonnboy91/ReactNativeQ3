@@ -5,28 +5,30 @@ import ListItem from './ListItem'
 const url = 'https://raw.githubusercontent.com/mattpe/wbma/master/docs/assets/test.json';
 
 const List = () => {
-  const [data, setData] = useState({ mediaArray: [] });
+  const [data, setData] = useState({mediaArray: []});
 
-  try {
-    useEffect(() => {
-      const loadMedia = async () => {
+
+  useEffect(() => {
+    const loadMedia = async () => {
+      try {
         const response = await fetch(url);
         const json = await response.json();
         setData(json);
         console.log(json);
-      };
-      loadMedia();
-    }, []);
-  } catch {
-    console.log(error);
-  }
+      } catch {
+        console.log(error);
+      }
+    };
+    loadMedia();
+  }, []);
+
 
   return (
-    <FlatList 
-          data={ data }
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({item}) => <ListItem singleMedia={item} />}
-        />
+    <FlatList
+      data={data}
+      keyExtractor={(item, index) => index.toString()}
+      renderItem={({item}) => <ListItem singleMedia={item} />}
+    />
   );
 };
 
