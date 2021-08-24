@@ -1,14 +1,17 @@
 import React from 'react';
 import {StyleSheet, SafeAreaView, Text, View, Image} from 'react-native';
 
+const uploadUrl = "http://media.mw.metropolia.fi/wbma/uploads/"
+
 const Single = (file) => {
     const otherParam = file.route.params.otherParam;
+    console.log("here",otherParam.thumbnails);
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.imagebox}>
                 <Image
                     style={styles.image}
-                    source={{uri: otherParam.thumbnails?.w160 ?? 'https://placekitten.com/200/300'}}
+                    source={{uri: uploadUrl + otherParam.thumbnails?.w160 ?? 'https://placekitten.com/200/300'}}
                 />
             </View>
             <View style={styles.textBox}>
@@ -35,6 +38,8 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     imagebox: {
+        width: 200,
+        height: 200,
         flex: 1,
     },
     image: {
