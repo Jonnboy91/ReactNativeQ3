@@ -14,7 +14,7 @@ const Stack = createStackNavigator();
 const TabScreen = () => {
   return (
     <Tab.Navigator screenOptions={{headerShown: false}}>
-      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Home2" component={Home} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );

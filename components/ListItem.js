@@ -18,8 +18,8 @@ const ListItem = (props) => {
                 />
             </View>
             <View style={styles.textBox}>
-                <Text style={{fontSize: 16}}>{props.singleMedia.title}</Text>
-                <Text style={{fontSize: 12}}>{props.singleMedia.description}</Text>
+                <Text style={{fontSize: 16, color: "white"}}>{props.singleMedia.title}</Text>
+                <Text style={{fontSize: 12, color: "grey"}}>{props.singleMedia.description}</Text>
             </View>
 
         </TouchableOpacity>
@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
     MainBox: {
         flexDirection: 'row',
         padding: 15,
-        marginBottom: 5,
-        backgroundColor: '#eee',
+        marginBottom: 8,
+        backgroundColor: '#291f52',
         borderRadius: 6,
         flex: 1,
     },
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     },
     image: {
         flex: 1,
-        borderRadius: 6,
+        borderRadius: 10,
     },
     textBox: {
         flex: 2,
