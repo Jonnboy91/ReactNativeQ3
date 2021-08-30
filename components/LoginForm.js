@@ -1,7 +1,28 @@
-import React from 'react';
-import {Button, View, FormTextInput} from 'react-native';
+import React, {useContext} from 'react';
+import FormTextInput from './FormTextInput';
+import {Alert, Button, View} from 'react-native';
+import { useLogin } from '../hooks/ApiHooks';
+import useLoginForm from '../hooks/LoginHooks';
+import {MainContext} from '../contexts/MainContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const LoginForm = (props) => {
+const LoginForm = () => {
+  const {setUser, isLoggedIn, user, setIsLoggedIn} = useContext(MainContext);
+
+    const doLogin = async () => {
+      const serverResponse = await useLogin(inputs);
+      if (serverResponse) {
+        Alert.alert(serverResponse.message);
+        await AsyncStorage.setItem('userToken', serverResponse.token);
+        setUser(serverResponse.user);
+        setIsLoggedIn(true);
+      } else {
+        Alert.alert('Login failed');
+      }
+  };
+
+  const {inputs, handleInputChange} = useLoginForm(); 
+
     return (
         <View>
       <FormTextInput

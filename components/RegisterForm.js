@@ -1,8 +1,35 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {FormTextInput, View, Button} from 'react-native';
+import React, {useContext} from 'react';
+import FormTextInput from './FormTextInput';
+import {Alert, View, Button} from 'react-native';
+import { useLogin, useRegister } from '../hooks/ApiHooks';
+import useSignUpForm from '../hooks/RegisterHooks';
+import {MainContext} from '../contexts/MainContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const RegisterForm = (props) => {
+const RegisterForm = () => {
+  const {setUser, isLoggedIn, user, setIsLoggedIn} = useContext(MainContext);
+
+  const doRegister = async () => {
+    const serverResponse = await useRegister(inputs);
+    if (serverResponse) {
+      Alert.alert(serverResponse.message);
+      const loginServerResponse = await useLogin(inputs);
+      if (loginServerResponse) {
+        Alert.alert(loginServerResponse.message);
+        await AsyncStorage.setItem('userToken', loginServerResponse.token);
+        setUser(loginServerResponse.user);
+        console.log("user is: ",user);
+        setIsLoggedIn(true);
+      } else {
+        Alert.alert('Login failed');
+      }
+    } else {
+      Alert.alert('register failed');
+    }
+};
+
+const {inputs, handleInputChange} = useSignUpForm(); // makes inputs and handleInput change visible from RegisterHooks.js
+
     return (
         <View>
       <FormTextInput

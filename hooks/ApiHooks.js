@@ -4,7 +4,6 @@ const url = 'https://media.mw.metropolia.fi/wbma/';
 
   const useLogin = async (data={}) => {
     try{
-      console.log("useLogin", data);
       const response = await fetch(url+'login', {
         method: 'POST',
         headers: {
@@ -13,9 +12,7 @@ const url = 'https://media.mw.metropolia.fi/wbma/';
         body: JSON.stringify(data)
       });
       if(response.ok){
-        console.log("response: ", response);
         const json = await response.json();
-        console.log("json: ",json);
         return json;
       } else{
         throw new Error("Response is not ok");
@@ -25,6 +22,24 @@ const url = 'https://media.mw.metropolia.fi/wbma/';
     }
    
   }
+
+  const useRegister = async (inputs) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(inputs),
+    };
+    try {
+       const response = await fetch(url + 'users', fetchOptions);
+       const json = await response.json();
+       return json;
+    } catch (e) {
+        console.log('ApiHooks register', e.message);
+        return false;
+    }
+  };
 
 
 const useLoadMedia = () => {
@@ -53,4 +68,4 @@ const useLoadMedia = () => {
   return data;
 };
 
-export {useLoadMedia, useLogin};
+export {useLoadMedia, useLogin, useRegister};
