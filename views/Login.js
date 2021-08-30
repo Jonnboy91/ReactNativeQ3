@@ -12,12 +12,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = (props) => {
     const [isLoggedIn, setIsLoggedIn] = useContext(MainContext);
-    console.log('ili', isLoggedIn);
-    // const logIn = async () => {
-        //setIsLoggedIn(true);
-        //await AsyncStorage.setItem('userToken', 'abc');
-       // props.navigation.navigate('Home');
-    //};
 
     const logIn = async () => {
         console.log("clicked")
@@ -42,7 +36,7 @@ const Login = (props) => {
             const userToken = await AsyncStorage.getItem('userToken');
             console.log('token', userToken);
             const response = await fetch('https://media.mw.metropolia.fi/wbma/users/user', {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                method: 'GET',
                 headers: {
                   'x-access-token': userToken
                 },

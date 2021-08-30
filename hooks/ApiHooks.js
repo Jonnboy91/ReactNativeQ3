@@ -1,17 +1,16 @@
 import React, {useState, useEffect} from 'react';
 
-const url = 'http://media.mw.metropolia.fi/wbma/';
+const url = 'https://media.mw.metropolia.fi/wbma/';
 
   const useLogin = async (username, password) => {
     try{
       console.log("useLogin");
       const response = await fetch(url+'login', {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
-          // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: JSON.stringify({username:username, password:password}) // body data type must match "Content-Type" header
+        body: JSON.stringify({username:username, password:password})
       });
       if(response.ok){
         console.log("response: ", response);
