@@ -16,7 +16,7 @@ const Login = (props) => {
     const logIn = async () => {
         console.log("clicked")
         try{
-            const login = await useLogin("Jonnboy91", "React12345");
+            const login = await useLogin({username:"Jonnboy91", password:"React12345"});
             console.log("login",login);
             if(login != null || login != undefined){
                 await AsyncStorage.setItem('userToken', login.token);

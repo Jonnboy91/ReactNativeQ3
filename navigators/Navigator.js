@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {getFocusedRouteNameFromRoute, NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from '../views/Home';
 import Profile from '../views/Profile';
 import Single from '../views/Single';
@@ -9,7 +9,7 @@ import Login from '../views/Login';
 import {MainContext} from '../contexts/MainContext';
 
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const TabScreen = () => {
   return (
