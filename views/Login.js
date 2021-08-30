@@ -6,26 +6,58 @@ import {
     Button,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import Home from './Home';
+import {useLogin} from '../hooks/ApiHooks'
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = (props) => {
     const [isLoggedIn, setIsLoggedIn] = useContext(MainContext);
     console.log('ili', isLoggedIn);
+    // const logIn = async () => {
+        //setIsLoggedIn(true);
+        //await AsyncStorage.setItem('userToken', 'abc');
+       // props.navigation.navigate('Home');
+    //};
+
     const logIn = async () => {
-        setIsLoggedIn(true);
-        await AsyncStorage.setItem('userToken', 'abc');
-        props.navigation.navigate('Home');
-    };
-    const getToken = async () => {
-        const userToken = await AsyncStorage.getItem('userToken');
-        console.log('token', userToken);
-        if (userToken === 'abc') {
-            setIsLoggedIn(true);
-            props.navigation.navigate('Home');
+        console.log("clicked")
+        try{
+            const login = await useLogin("Jonnboy91", "React12345");
+            console.log("login",login);
+            if(login != null || login != undefined){
+                await AsyncStorage.setItem('userToken', login.token);
+                setIsLoggedIn(true);
+            } else {
+                throw new Error("Login undefined or NULL");
+            }
+        } catch (e){
+            console.log("errooorrrs")
+            console.log(e)
         }
-    };
+        
+      };
+
+      const getToken = async () => {
+          try{
+            const userToken = await AsyncStorage.getItem('userToken');
+            console.log('token', userToken);
+            const response = await fetch('https://media.mw.metropolia.fi/wbma/users/user', {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                headers: {
+                  'x-access-token': userToken
+                },
+              });
+              if(response.ok){
+                  isLoggedIn = true;
+              }else {
+                  isLoggedIn = false;
+              }
+          } catch(e){
+              console.log("error on token",e);
+          }
+        
+      };
+    
     useEffect(() => {
         getToken();
     }, []);

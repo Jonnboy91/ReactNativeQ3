@@ -1,7 +1,6 @@
 import React from 'react';
 import {FlatList} from 'react-native';
 import ListItem from './ListItem'
-import PropTypes from 'prop-types';
 import {useLoadMedia} from '../hooks/ApiHooks'
 
 const url = 'http://media.mw.metropolia.fi/wbma/';

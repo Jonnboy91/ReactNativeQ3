@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {StatusBar} from 'expo-status-bar'
 import {StyleSheet, SafeAreaView} from 'react-native';
 import GlobalStyles from '../GlobalStyles'
