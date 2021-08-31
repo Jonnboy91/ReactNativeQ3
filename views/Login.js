@@ -14,22 +14,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Login = ({navigation}) => {
     const {setUser, isLoggedIn, user, setIsLoggedIn} = useContext(MainContext);
 
-    /* const logIn = async () => {
-        console.log("clicked")
-        try{
-            const login = await useLogin({username:"Jonnboy91", password:"React12345"});
-            if(login != null || login != undefined){
-                await AsyncStorage.setItem('userToken', login.token);
-                setIsLoggedIn(true);
-            } else {
-                throw new Error("Login undefined or NULL");
-            }
-        } catch (e){
-            console.log(e)
-        }
-        
-      }; */
-
       const getToken = async () => {
           try{
             const userToken = await AsyncStorage.getItem('userToken');
