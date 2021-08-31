@@ -39,7 +39,9 @@ const Login = ({navigation}) => {
                   'x-access-token': userToken
                 },
               });
+              const json = await response.json();
               if(response.ok){
+                  setUser(json);
                   setIsLoggedIn(true);
               }else {
                 setIsLoggedIn(false);
