@@ -7,7 +7,6 @@ import {
 import PropTypes from 'prop-types';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
-import {useLogin} from '../hooks/ApiHooks'
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
