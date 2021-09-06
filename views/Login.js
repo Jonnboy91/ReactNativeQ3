@@ -1,9 +1,8 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
-    StyleSheet,
-    KeyboardAvoidingView,
+    KeyboardAvoidingView, View,
 } from 'react-native';
-import { Text } from 'react-native-elements';
+import { Button, Text } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
@@ -12,6 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({navigation}) => {
     const {setUser, isLoggedIn, user, setIsLoggedIn} = useContext(MainContext);
+    const {account, setAccount} = useState(false);
 
       const getToken = async () => {
           try{
@@ -38,24 +38,28 @@ const Login = ({navigation}) => {
     useEffect(() => {
         getToken();
     }, []);
+    
     return (
         <KeyboardAvoidingView>
+          {account ? (
+            <View>
           <Text h3 style={{textAlign: 'center'}}>Login</Text>
           <LoginForm navigation={navigation}/>
+          </View>
+    ): (
+      <View>
           <Text h3 style={{textAlign: 'center'}}>Register</Text>
           <RegisterForm navigation={navigation} />
+          </View>
+    )}
+    <Button title="Already have an account?" onPress={
+            () => {
+                setAccount(true);
+            }
+        }></Button>
         </KeyboardAvoidingView>
       );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
 
 Login.propTypes = {
     navigation: PropTypes.object,
