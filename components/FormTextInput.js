@@ -1,21 +1,13 @@
 import React from 'react';
-import {TextInput, StyleSheet} from 'react-native';
+import {Input} from 'react-native-elements';
 
-const FormTextInput = ({style, ...otherProps}) => {
+const FormTextInput = ({icon, ...otherProps}) => {
     return (
-      <TextInput
-        style={[styles.textInput, style]}
+      <Input
         {...otherProps}
+        leftIcon={icon}
       />
     );
   };
-
-  const styles = StyleSheet.create({
-    textInput: {
-      height: 40,
-      borderColor: '#ccc',
-      borderWidth: 1,
-    },
-  });
 
   export default FormTextInput;

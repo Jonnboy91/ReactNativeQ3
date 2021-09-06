@@ -1,52 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Text, View, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import { ListItem as NBListItem, Avatar, Button} from 'react-native-elements';
 
 const uploadUrl = "http://media.mw.metropolia.fi/wbma/uploads/"
 
 const ListItem = (props) => {
     return (
-        <TouchableOpacity style={styles.MainBox} onPress={
+        <NBListItem bottomDivider>
+           <Avatar source={{uri: uploadUrl + props.singleMedia.thumbnails?.w160}} />
+        <NBListItem.Content>
+          <NBListItem.Title>{props.singleMedia.title}</NBListItem.Title>
+          <NBListItem.Subtitle>{props.singleMedia.description}</NBListItem.Subtitle>
+        </NBListItem.Content>
+        <Button title="View" onPress={
             () => {
                 props.navigation.navigate('Single', {otherParam: props.singleMedia});
             }
-        }>
-            <View style={styles.imagebox}>
-                <Image
-                    style={styles.image}
-                    source={{uri: uploadUrl + props.singleMedia.thumbnails?.w160 ?? 'https://placekitten.com/200/300'}}
-                />
-            </View>
-            <View style={styles.textBox}>
-                <Text style={{fontSize: 16}}>{props.singleMedia.title}</Text>
-                <Text style={{fontSize: 12}}>{props.singleMedia.description}</Text>
-            </View>
-
-        </TouchableOpacity>
+        }/>
+      </NBListItem>
     );
 }
-
-const styles = StyleSheet.create({
-    MainBox: {
-        flexDirection: 'row',
-        padding: 15,
-        marginBottom: 5,
-        backgroundColor: '#eee',
-        borderRadius: 6,
-        flex: 1,
-    },
-    imagebox: {
-        flex: 1,
-    },
-    image: {
-        flex: 1,
-        borderRadius: 6,
-    },
-    textBox: {
-        flex: 2,
-        padding: 10,
-    }
-});
 
 ListItem.propTypes = {
     singleMedia: PropTypes.object,
