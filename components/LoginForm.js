@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
-import FormTextInput from './FormTextInput';
 import {Alert, View} from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Input } from 'react-native-elements';
 import { useLogin } from '../hooks/ApiHooks';
 import useLoginForm from '../hooks/LoginHooks';
 import {MainContext} from '../contexts/MainContext';
@@ -26,18 +25,18 @@ const LoginForm = () => {
 
     return (
         <View>
-      <FormTextInput
+      <Input
         autoCapitalize="none"
         placeholder="username"
         onChangeText={(txt) => handleInputChange('username', txt)}
       />
-      <FormTextInput
+      <Input
         autoCapitalize="none"
         placeholder="password"
         onChangeText={(txt) => handleInputChange('password', txt)}
         secureTextEntry={true}
       />
-      <Button title="Login!" onPress={doLogin}/>
+      <Button title="Sign in!" onPress={doLogin}/>
     </View>
     );
 }

@@ -1,9 +1,9 @@
 import React, {useContext, useEffect} from 'react';
 import {
     StyleSheet,
-    Text,
     KeyboardAvoidingView,
 } from 'react-native';
+import { Text } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
@@ -39,9 +39,10 @@ const Login = ({navigation}) => {
         getToken();
     }, []);
     return (
-        <KeyboardAvoidingView style={styles.container}>
-          <Text>Login</Text>
+        <KeyboardAvoidingView>
+          <Text h3 style={{textAlign: 'center'}}>Login</Text>
           <LoginForm navigation={navigation}/>
+          <Text h3 style={{textAlign: 'center'}}>Register</Text>
           <RegisterForm navigation={navigation} />
         </KeyboardAvoidingView>
       );
