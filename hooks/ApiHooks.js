@@ -41,6 +41,19 @@ const url = 'https://media.mw.metropolia.fi/wbma/';
     }
   };
 
+  const checkUsernameAvailability = async (username) => {
+    try{
+      const response = await fetch(
+        'https://media.mw.metropolia.fi/wbma/users/username/' + username
+      );
+      const jsonResponse = await response.json();
+      console.log(jsonResponse);
+      return jsonResponse.available
+    } catch(e){
+      console.log(e)
+    }
+  }
+
 
 const useLoadMedia = () => {
   const [data, setData] = useState({mediaArray: []});
@@ -68,4 +81,4 @@ const useLoadMedia = () => {
   return data;
 };
 
-export {useLoadMedia, useLogin, useRegister};
+export {useLoadMedia, useLogin, useRegister, checkUsernameAvailability};

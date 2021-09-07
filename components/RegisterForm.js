@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import FormTextInput from './FormTextInput';
 import {Alert, View} from 'react-native';
 import { useLogin, useRegister } from '../hooks/ApiHooks';
@@ -9,6 +9,8 @@ import {Button} from 'react-native-elements';
 
 const RegisterForm = () => {
   const {setUser, isLoggedIn, user, setIsLoggedIn} = useContext(MainContext);
+  const {inputs, handleInputChange, checkUsername, registerError} = useSignUpForm();
+  const [usernameNotUsed, setUsernameNotUsed] = useState(true)
 
   const doRegister = async () => {
     const serverResponse = await useRegister(inputs);
@@ -29,15 +31,18 @@ const RegisterForm = () => {
     }
 };
 
-const {inputs, handleInputChange} = useSignUpForm(); // makes inputs and handleInput change visible from RegisterHooks.js
 
     return (
         <View>
       <FormTextInput
         autoCapitalize="none"
         placeholder="username"
-        onChangeText={(txt) => handleInputChange('username', txt)}
+        onChangeText={(txt) => handleInputChange('username', txt) }
         icon={{ type: 'material', name: 'person' }}
+        onEndEditing = { async (evt) => {
+          await checkUsername(evt.nativeEvent.text);
+          }}
+        error = {registerError.username}
       />
       <FormTextInput
         autoCapitalize="none"

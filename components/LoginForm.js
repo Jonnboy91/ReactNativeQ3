@@ -5,6 +5,7 @@ import { useLogin } from '../hooks/ApiHooks';
 import useLoginForm from '../hooks/LoginHooks';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {validator} from '../utils/validator'
 
 const LoginForm = () => {
   const {setUser, isLoggedIn, user, setIsLoggedIn} = useContext(MainContext);
@@ -30,6 +31,9 @@ const LoginForm = () => {
         placeholder="username"
         onChangeText={(txt) => handleInputChange('username', txt)}
         icon={{ type: 'material', name: 'person' }}
+        onEndEditing={(evt) => {
+          validator("username", evt.nativeEvent.text, "username")
+        }}
       />
       <FormTextInput
         autoCapitalize="none"
