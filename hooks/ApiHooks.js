@@ -4,18 +4,19 @@ const url = 'https://media.mw.metropolia.fi/wbma/';
 
   const useLogin = async (data={}) => {
     try{
+      console.log(data.confirm_password);
       const response = await fetch(url+'login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: data
       });
       if(response.ok){
         const json = await response.json();
         return json;
       } else{
-        throw new Error("Response is not ok");
+        throw new Error("useLogin errors");
       }
     }catch(e){
       console.log("error is: ", e)
@@ -29,7 +30,7 @@ const url = 'https://media.mw.metropolia.fi/wbma/';
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(inputs),
+      body: inputs,
     };
     try {
        const response = await fetch(url + 'users', fetchOptions);
