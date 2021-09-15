@@ -34,7 +34,7 @@ const Upload = ({navigation}) => {
         navigation.navigate("Home Screen");
       }
     } catch (e) {
-      console.log("doUpload error", e.message);
+      console.log("doUpload error ", e.message);
     }
   };
 
