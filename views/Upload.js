@@ -1,51 +1,88 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
 import {Button, Image} from 'react-native-elements';
-import {MainContext} from '../contexts/MainContext';
+import useUploadForm from "../hooks/UploadHooks";
+import * as ImagePicker from "expo-image-picker";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FormTextInput from '../components/FormTextInput';
+import {useTag, useUploadMedia} from '../hooks/ApiHooks';
 
-const Upload = (props) => {
-  const {setUser, isLoggedIn, user, setIsLoggedIn} = useContext(MainContext);
-  const [avatar, setAvatar] = useState('');
+const Upload = ({navigation}) => {
+  const {inputs, handleInputChange } = useUploadForm();
+  const [image, setImage] = useState(require("../assets/icon.png"));
+  const { uploadMedia, loading } = useUploadMedia();
+  const { addTag } = useTag();
 
-  const loadAvatar = async () => {
+  const doUpload = async () => {
+    const filename = image.uri.split('/').pop();
+    // Infer the type of the image
+    const match = /\.(\w+)$/.exec(filename);
+    let type = match ? `image/${match[1]}` : `image`;
+    if (type === 'image/jpg') type = 'image/jpeg';
+    const formData = new FormData();
+    formData.append("file", { uri: image.uri, name: filename, type });
+    formData.append("title", inputs.title);
+    formData.append("description", inputs.description);
+
     try {
-      const response = await fetch(
-        'https://media.mw.metropolia.fi/wbma/tags/avatar_' + user.user_id
-      );
-      const jsonResponse = await response.json();
-      setAvatar(jsonResponse[0].filename);
+      const userToken = await AsyncStorage.getItem("userToken");
+      const result = await uploadMedia(formData, userToken);
+      console.log("doUpload", result);
+      const tagResult = await addTag(result.file_id, "myApp1991", userToken);
+      console.log("doUploading", tagResult);
+      if (tagResult.message) {
+        navigation.navigate("Home Screen");
+      }
     } catch (e) {
-      console.log(e);
+      console.log("doUpload error", e.message);
     }
   };
 
   useEffect(() => {
-    loadAvatar();
+    (async () => {
+      if (Platform.OS !== "web") {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
   }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 0.5
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage({ uri: result.uri });
+    }
+  };
 
   return (
     <View>
         <Image
-        containerStyle={{alignSelf: 'center', marginVertical: 18}}
-        style={{width: 350, height: 350}}
-        source={{uri: 'http://media.mw.metropolia.fi/wbma/uploads/' + avatar}}
-      />
-      <Button title="Select file!" onPress={console.log("Selected")} buttonStyle={{marginBottom: 16}}/>
+        source={image}
+        style={{ width: 400, height: 200 }} />
+      <Button title="Select media" onPress={pickImage} loading={loading} />
 
       <FormTextInput
         autoCapitalize="none"
         placeholder="Title"
-        onChangeText={(txt) => console.log(txt)}
+        onChangeText={(txt) => handleInputChange("title", txt)}
       />
       <FormTextInput
         autoCapitalize="none"
         placeholder="Description"
-        onChangeText={(txt) => console.log(txt)}
+        onChangeText={(txt) => handleInputChange("description", txt)}
       />
       
-      <Button title="Upload!" onPress={console.log("Uploaded")}/>
+      <Button title="Upload" onPress={doUpload} loading={loading} />
     </View>
   );
 };

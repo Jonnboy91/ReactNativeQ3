@@ -57,6 +57,7 @@ const StackScreen = () => {
             }
           )} />
           <Stack.Screen name="Single" component={Single} />
+          <Stack.Screen name="Upload" component={Upload} />
         </>
       ) : (
         <>

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {useState, useEffect} from 'react';
 
 const url = 'https://media.mw.metropolia.fi/wbma/';
@@ -82,4 +83,61 @@ const useLoadMedia = () => {
   return data;
 };
 
-export {useLoadMedia, useLogin, useRegister, checkUsernameAvailability};
+const useUploadMedia = () => {
+  const [loading, setLoading] = useState(false);
+  const [update, setUpdate] = useState(0);
+
+  const uploadMedia = async (formData, token) => {
+    try {
+      setLoading(true);
+      const options = {
+        method: "POST",
+        headers: { "x-access-token": token },
+        data: formData
+      };
+      const result = await axios(url + "media/", options);
+      console.log("axios", result.data);
+      if (result.data) {
+        setUpdate(update + 1);
+        return result.data;
+      }
+    } catch (e) {
+      throw new Error(e.message);
+    } finally {
+      setLoading(false);
+    }
+  
+  };
+
+  return {loading, uploadMedia};
+}
+
+const useTag = () => {
+
+  const addTag = async (file_id, tag, token) => {
+    const options = {
+      method: 'POST',
+      headers: {'x-access-token': token, "Content-Type": "application/json"},
+      body: JSON.stringify({file_id, tag}),
+    }
+
+    try {
+      const response = await fetch(url + 'tags', options)
+      const tagInfo = response.json();
+      if (tagInfo.error) {
+        throw new Error(tagInfo.message + ": " + tagInfo.error);
+      } else if (!response.ok) {
+        throw new Error("fetch failed");
+      }
+      return tagInfo
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  }
+
+  return { addTag };
+};
+
+
+
+export {useLoadMedia, useLogin, useRegister, checkUsernameAvailability, useUploadMedia, useTag};
