@@ -8,6 +8,7 @@ import Profile from '../views/Profile';
 import Single from '../views/Single';
 import Login from '../views/Login';
 import {MainContext} from '../contexts/MainContext';
+import Upload from '../views/Upload';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -27,6 +28,9 @@ const TabScreen = () => {
         } else if (route.name === 'Profile') {
           iconName = focused ? 'person' : 'person';
           size= 36;
+        } else if(route.name === 'Upload') {
+          iconName = focused ? 'photo' : 'photo';
+          size= 36;
         }
 
         return <Icon name={iconName} color={color} size={size} />;
@@ -35,6 +39,7 @@ const TabScreen = () => {
       tabBarInactiveTintColor: 'gray',
     })}>
       <Tab.Screen name="Home Screen" component={Home}/>
+      <Tab.Screen name="Upload" component={Upload}/>
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );

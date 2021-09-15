@@ -12,7 +12,10 @@ const LoginForm = () => {
   const {setUser, isLoggedIn, user, setIsLoggedIn} = useContext(MainContext);
 
     const doLogin = async () => {
-      const serverResponse = await useLogin(inputs);
+      const serverResponse = await useLogin(JSON.stringify({
+        username: inputs.username,
+        password: inputs.password,
+      }));
       if (serverResponse) {
         Alert.alert(serverResponse.message);
         await AsyncStorage.setItem('userToken', serverResponse.token);

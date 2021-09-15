@@ -23,8 +23,6 @@ const RegisterForm = () => {
         const loginServerResponse = await useLogin(JSON.stringify({
           username: inputs.username,
           password: inputs.password,
-          email: inputs.email,
-          full_name: inputs.full_name,
         }));
         if (loginServerResponse) {
           Alert.alert(loginServerResponse.message);
