@@ -56,6 +56,27 @@ const url = 'https://media.mw.metropolia.fi/wbma/';
     }
   }
 
+  const deleteMedia = async (id, token) => {
+    const [loading, setLoading] = useState(false);
+    try {
+      setLoading(true);
+      const options = {
+        method: 'DELETE',
+        headers: {
+          'x-access-token': token,
+        },
+      };
+      const response = await fetch(url + 'media/' + id, options);
+      const result = await response.json();
+      return result;
+    } catch (e) {
+      console.log('deleteMedia error', e);
+      throw new Error(e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
 const useLoadMedia = () => {
   const [data, setData] = useState({mediaArray: []});
@@ -140,4 +161,4 @@ const useTag = () => {
 
 
 
-export {useLoadMedia, useLogin, useRegister, checkUsernameAvailability, useUploadMedia, useTag};
+export {useLoadMedia, useLogin, useRegister, checkUsernameAvailability, useUploadMedia, useTag, deleteMedia};

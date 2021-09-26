@@ -43,6 +43,9 @@ const Profile = (props) => {
       <Text style={{padding: 10}}>Fullname: {user.full_name ?? 'No added name'}</Text>
       <Text style={{padding: 10}}>Email: {user.email}</Text>
       <Button title={'Logout'} onPress={logout} />
+      <Button raised title={"My Files"} onPress={() => {
+        props.navigation.navigate("My Files");
+      }} />
     </View>
   );
 };

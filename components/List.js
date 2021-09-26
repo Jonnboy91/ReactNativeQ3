@@ -13,6 +13,7 @@ const List = ({navigation}) => {
         ({item}) => <ListItem
           navigation={navigation}
           singleMedia={item}
+          showButtons={false}
         />
       }
     />
